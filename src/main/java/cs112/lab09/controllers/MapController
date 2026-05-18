@@ -1,0 +1,66 @@
+
+package cs112.lab09.controllers;
+
+import cs112.lab09.models.RevisedHistoricalEvent;
+import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
+import javafx.scene.Parent;
+import javafx.scene.Scene;
+import javafx.stage.Stage;
+
+public class MapController {
+
+    @FXML
+    private void onTulsaClick() {
+
+        RevisedHistoricalEvent event =
+                new RevisedHistoricalEvent(
+                        "Tulsa Race Massacre",
+                        "1921",
+                        "A violent attack on the Greenwood District."
+                );
+
+        openEventWindow("Tulsa, Oklahoma", event);
+    }
+
+    @FXML
+    private void onChicagoClick() {
+
+        RevisedHistoricalEvent event =
+                new RevisedHistoricalEvent(
+                        "Chicago Race Riot",
+                        "1919",
+                        "Racial tensions erupted into violence in Chicago."
+                );
+
+        openEventWindow("Chicago, Illinois", event);
+    }
+
+    private void openEventWindow(String location,
+                                 RevisedHistoricalEvent event) {
+
+        try {
+
+            FXMLLoader loader = new FXMLLoader(
+                    getClass().getResource("/cs112/lab09/event-view.fxml")
+            );
+
+            Parent root = loader.load();
+
+            EventController controller = loader.getController();
+
+            controller.initData(location, event);
+
+            Stage stage = new Stage();
+
+            stage.setTitle(location);
+
+            stage.setScene(new Scene(root));
+
+            stage.show();
+
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+}
